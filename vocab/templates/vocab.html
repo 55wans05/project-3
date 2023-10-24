@@ -109,10 +109,6 @@
                  if (data.result.status == 'solved') {
                      window.location = '/success' 
                  }
-                 // Prior letter was bad, delete it from user input
-                 else if (data.result.status == 'new_letter') {
-                     $("#attempt").val(txt.substring(0, txt.length - 1));
-                 }
                  // We're finished with the current word; clear the user input
                  else if (data.result.status == 'new_word') {
                      $("#attempt").val("");

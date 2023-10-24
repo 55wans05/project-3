@@ -122,7 +122,6 @@ def check():
         result['status'] = 'new_word'
     elif not in_jumble:
         result['message'] = '"{}" can\'t be made from the letters {}'.format(text, jumble)
-        result['status'] = 'new_letter'
     elif not matched:
         result['message'] = "{} isn't in the list of words".format(text)
     else:
