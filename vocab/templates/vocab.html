@@ -107,7 +107,7 @@
                  // Handle the status returned by the server
                  // If solved, redirect
                  if (data.result.status == 'solved') {
-                     window.location = '/success' 
+                     window.location.href = '/success' 
                  }
                  // We're finished with the current word; clear the user input
                  else if (data.result.status == 'new_word') {
