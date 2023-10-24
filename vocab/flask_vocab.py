@@ -97,7 +97,13 @@ def check():
     matches = flask.session.get("matches", [])  # Default to empty list
     result = {
         "status": "",
-        "message": ""
+        "message": "",
+        # I'm having the server send the matches every time because
+        # it's the source of truth for the matches and I
+        # don't want to maintain and update a separate
+        # list on the client side (and also I don't want
+        # to try and decode a flask cookie on the client).
+        "matches": matches
     }
 
     # Is it good?

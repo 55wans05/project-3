@@ -71,6 +71,9 @@
          </div>
          <!-- row -->
          <br />
+         <h4 id="results_header" style="display: none;">Words found: </h4>
+         <p id="results"> </p>
+         <br />
          <p id="message_box" class="message"></p>
          <div class="row">
             <div class="col-xs-6 text-center">
@@ -82,8 +85,6 @@
             </div>
          </div>
          <br />
-         <h2 id="results_header" style="display: none;">You found </h2>
-         <p id="results"> </p>
       <script>
       $("#entry").submit( function(event) {
             event.preventDefault();
@@ -110,11 +111,20 @@
                  }
                  // Prior letter was bad, delete it from user input
                  else if (data.result.status == 'new_letter') {
-                     $("#attempt").val(txt.substring(0, str.length - 1));
+                     $("#attempt").val(txt.substring(0, txt.length - 1));
                  }
                  // We're finished with the current word; clear the user input
                  else if (data.result.status == 'new_word') {
                      $("#attempt").val("");
+                 }
+
+                 // If we have matches, show the you found text
+                 if (data.result.matches.length > 0) {
+                  $("#results_header").css("display", 'block')
+                  // show our matches
+                  $("#results").html(data.result.matches.join(", "));
+                 } else {
+                  $("#results_header").css("display", "none")
                  }
 
                  return
