@@ -114,11 +114,11 @@ def check():
     elif text in matches:
         result['message'] ="You already found {}".format(text)
         result['status'] = 'new_word'
-    elif not matched:
-        result['message'] = "{} isn't in the list of words".format(text)
     elif not in_jumble:
         result['message'] = '"{}" can\'t be made from the letters {}'.format(text, jumble)
         result['status'] = 'new_letter'
+    elif not matched:
+        result['message'] = "{} isn't in the list of words".format(text)
     else:
         app.logger.debug("This case shouldn't happen!")
         assert False  # Raises AssertionError

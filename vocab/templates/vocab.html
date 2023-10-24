@@ -71,6 +71,7 @@
          </div>
          <!-- row -->
          <br />
+         <p id="message_box" class="message"></p>
          <div class="row">
             <div class="col-xs-6 text-center">
                <form id="entry">
@@ -81,9 +82,8 @@
             </div>
          </div>
          <br />
-         <h2 id="results_header">You found </h2>
+         <h2 id="results_header" style="display: none;">You found </h2>
          <p id="results"> </p>
-         <p class="message"></p>
       <script>
       $("#entry").submit( function(event) {
             event.preventDefault();
@@ -99,10 +99,24 @@
 
             $.getJSON( "/_check", { attempt: txt },
                function(data) {
-                 // First, if solved, redirect
+                 // First, display any messages the server wants us to display
+                 console.log(data.result.message)
+                 $("#message_box").html(data.result.message)
+
+                 // Handle the status returned by the server
+                 // If solved, redirect
                  if (data.result.status == 'solved') {
                      window.location = '/success' 
                  }
+                 // Prior letter was bad, delete it from user input
+                 else if (data.result.status == 'new_letter') {
+                     $("#attempt").val(txt.substring(0, str.length - 1));
+                 }
+                 // We're finished with the current word; clear the user input
+                 else if (data.result.status == 'new_word') {
+                     $("#attempt").val("");
+                 }
+
                  return
                });
       });
