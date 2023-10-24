@@ -73,31 +73,40 @@
          <br />
          <div class="row">
             <div class="col-xs-6 text-center">
-               <form id="entry" method="POST" action="/_check">
+               <form id="entry">
                   <label for="attempt">Word:</label>
                   <input id="attempt" name="attempt" type="text" width="15"
                      autocomplete="off"  autofocus />
-                  <input type="submit" name="try" />
                </form>
             </div>
          </div>
          <br />
-         {% if session.matches|length is not equalto 0  %}
-         <h2>You found </h2>
-         <p id="results">
-            {% for match in session.matches %}
-            {{ match }}
-            {% endfor %}
-         </p>
-         {% endif %}
-         {% with messages = get_flashed_messages() %}
-         {% if messages %}
-         <!-- Mismatch, already found, etc. "flashed" from Python -->
-         {% for message in messages %}
-         <p class="message">{{ message }}</p>
-         {% endfor %}
-         {% endif %}
-         {% endwith %}
+         <h2 id="results_header">You found </h2>
+         <p id="results"> </p>
+         <p class="message"></p>
+      <script>
+      $("#entry").submit( function(event) {
+            event.preventDefault();
+            });
+
+      $("#attempt").keyup(function(event) {
+            var txt = $("#attempt").val();  // Current content of the input field
+            var keycode = event.which;      // The key that just went up
+            var letter = String.fromCharCode(keycode);
+            
+            // Returning if we get a non alphabet key
+            if (! "ABCDEFGHIJKLMNOPQRSTUVWXYZ".includes(letter)) { return }
+
+            $.getJSON( "/_check", { attempt: txt },
+               function(data) {
+                 // First, if solved, redirect
+                 if (data.result.status == 'solved') {
+                     window.location = '/success' 
+                 }
+                 return
+               });
+      });
+      </script>
       </div>
       <!-- container -->
    </body>
