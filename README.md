@@ -1,5 +1,7 @@
 # UOCIS322 - Project 3 #
 
+Stephen Swanson - sswanso5@uoregon.edu
+
 You'll learn about JQuery and asynchronous requests in this project.
 
 ## Overview
