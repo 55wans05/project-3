@@ -14,4 +14,4 @@ RUN pip install -r /app/requirements.txt
 COPY . /app
 WORKDIR /app
 ENTRYPOINT ["python"]
-CMD ["flask_minijax.py"]
+CMD ["flask_vocab.py"]
